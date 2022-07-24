@@ -1,6 +1,7 @@
 //setup for api
 const dotenv = require('dotenv');
-dotenv.config();
+dotenv.config({path: 'C:\\Users\\Johns\\Desktop\\NLP\\evaluate-news-nlp\\src\\.env'
+});
 const apiKey = process.env.API_KEY;
 const endpoint = process.env.API_ENDPOINT;
 console.log(`Your API key is ${process.env.API_KEY}`);
@@ -33,8 +34,8 @@ app.get('/', function (req, res) {
 })
 
 //designates what port the app will listen to for incoming requests
-app.listen(8081, function () {
-    console.log('Example app listening on port 8081!')
+app.listen(8080, function () {
+    console.log('Example app listening on port 8080!')
 })
 
 /*mock api for testing

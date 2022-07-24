@@ -15,12 +15,11 @@ function handleSubmit(event) {
     postData('http://localhost:8081/call', url)
     .then(manageErrors(res)
     .then(function(res) {
-        agreementTxt.insertAdjacentHTML(beforeend, res.agreement)
-        subjectivityTxt.insertAdjacentHTML(beforeend, res.subjectivity)
-        confidenceTxt.insertAdjacentHTML(beforeend, res.confidence)
+        agreementTxt.insertAdjacentHTML(beforeend, res.agreement),
+        subjectivityTxt.insertAdjacentHTML(beforeend, res.subjectivity),
+        confidenceTxt.insertAdjacentHTML(beforeend, res.confidence),
         ironyTxt.insertAdjacentHTML(beforeend, res.irony)
-    });
-};
+    }))};
 /* Function to POST data - recycled from weather app */
     const postData = async (url = '', data = {}) => {
         const response = await fetch (url, {
