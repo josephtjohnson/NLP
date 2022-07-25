@@ -47,8 +47,8 @@ app.get('/test', function (req, res) {
 
 const apiCall = async(req, res) => {
     if (Object.keys(req.body).length === 0) res.status(404).send('Please use a valid URL');
-    console.log(req.body);
-    const response = await fetch ('${endpoint}key=${apiKey}url=${req.body.text}&lang=en');
+    console.log(req.body.url);
+    const response = await fetch (endpoint + 'key=$' + apiKey + 'url=$' + req.body.url + '&lang=en');
     try {
         const data = await response.json();
         console.log(data);

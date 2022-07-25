@@ -8,19 +8,26 @@ function handleSubmit(event) {
     let subjectivityTxt = document.getElementById('subjectivity');
     let confidenceTxt = document.getElementById('confidence');
     let ironyTxt = document.getElementById('irony');
-    let url = document.getElementById('url');
+    let site = document.getElementById('url').value;
 
     //verify a url was put into the form field
-    Client.checkForURL(url);
+    if(Client.checkForURL(site)) {
+        try {
+            postData('http://localhost:8080/call', site)
+            //.then(manageErrors(response))
+            .then(function(response) {
+                console.log(response);
+                agreementTxt.insertAdjacentHTML("beforeend", response.agreement),
+                subjectivityTxt.insertAdjacentHTML("beforeend", response.subjectivity),
+                confidenceTxt.insertAdjacentHTML("beforeend", response.confidence),
+                ironyTxt.insertAdjacentHTML("beforeend", response.irony)
+            });
+        } catch(e) {
+                console.log("error", e);
+        };
+    };
+};
 
-    postData('http://localhost:8080/call', url)
-    //.then(manageErrors(res)
-    .then(function(res) {
-        agreementTxt.insertAdjacentHTML(beforeend, res.agreement),
-        subjectivityTxt.insertAdjacentHTML(beforeend, res.subjectivity),
-        confidenceTxt.insertAdjacentHTML(beforeend, res.confidence),
-        ironyTxt.insertAdjacentHTML(beforeend, res.irony)
-    })};
 /* Function to POST data - recycled from weather app */
     const postData = async (url = '', data = {}) => {
         const response = await fetch (url, {
@@ -29,12 +36,11 @@ function handleSubmit(event) {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(data)
+            body: JSON.stringify({url : url})
         });
 
         try {
-            const newData = await response.json
-            .then((newData) => updateUI(newData));
+            const newData = await response.json;
         }
         catch(error) {
             console.log('error', error);
@@ -51,13 +57,13 @@ function handleSubmit(event) {
     })
     */
 
-//    function manageErrors (response) {
-//        if(response.status === 404) {
-//            throw Error(response.statusText);
-//        }
-//        return response;
-//    };
+    function manageErrors (response) {
+        if(response.status === 404) {
+            throw Error(response.statusText);
+        }
+        return response;
+    };
 
-document.querySelector('button[type=submit]').addEventListener("click", handleSubmit);
+document.querySelector('input[type=submit]').addEventListener("click", handleSubmit);
 
 export { handleSubmit };
