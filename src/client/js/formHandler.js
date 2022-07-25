@@ -1,6 +1,7 @@
 function handleSubmit(event) {
 
     event.preventDefault()
+    console.log("::: Form Submitted :::");
 
     //pull elements to update for sentiment analysis
     let agreementTxt = document.getElementById('agreement');
@@ -12,14 +13,14 @@ function handleSubmit(event) {
     //verify a url was put into the form field
     Client.checkForURL(url);
 
-    postData('http://localhost:8081/call', url)
-    .then(manageErrors(res)
+    postData('http://localhost:8080/call', url)
+    //.then(manageErrors(res)
     .then(function(res) {
         agreementTxt.insertAdjacentHTML(beforeend, res.agreement),
         subjectivityTxt.insertAdjacentHTML(beforeend, res.subjectivity),
         confidenceTxt.insertAdjacentHTML(beforeend, res.confidence),
         ironyTxt.insertAdjacentHTML(beforeend, res.irony)
-    }))};
+    })};
 /* Function to POST data - recycled from weather app */
     const postData = async (url = '', data = {}) => {
         const response = await fetch (url, {
@@ -32,8 +33,8 @@ function handleSubmit(event) {
         });
 
         try {
-            const newData = await response.json();
-            return newData;
+            const newData = await response.json
+            .then((newData) => updateUI(newData));
         }
         catch(error) {
             console.log('error', error);
@@ -50,11 +51,11 @@ function handleSubmit(event) {
     })
     */
 
-    function manageErrors (response) {
-        if(response.status === 404) {
-            throw Error(response.statusText);
-        }
-        return response;
-    };
+//    function manageErrors (response) {
+//        if(response.status === 404) {
+//            throw Error(response.statusText);
+//        }
+//        return response;
+//    };
 
 export { handleSubmit };

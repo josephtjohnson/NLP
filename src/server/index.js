@@ -2,9 +2,10 @@
 const dotenv = require('dotenv');
 dotenv.config({path: 'C:\\Users\\Johns\\Desktop\\NLP\\evaluate-news-nlp\\src\\.env'
 });
+
 const apiKey = process.env.API_KEY;
 const endpoint = process.env.API_ENDPOINT;
-console.log(`Your API key is ${process.env.API_KEY}`);
+console.log('Your api key is ' + apiKey);
 
 const path = require('path')
 const express = require('express')
