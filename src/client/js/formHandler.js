@@ -58,4 +58,6 @@ function handleSubmit(event) {
 //        return response;
 //    };
 
+document.querySelector('button[type=submit]').addEventListener("click", handleSubmit);
+
 export { handleSubmit };
