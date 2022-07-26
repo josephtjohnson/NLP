@@ -7,7 +7,7 @@ import { checkForURL } from './js/urlChecker';
 import { handleSubmit } from './js/formHandler';
 
 
-alert("I EXIST");
+//alert("I EXIST");
 
 export {
  checkForURL,

@@ -8,7 +8,7 @@ function checkForURL(inputURL) {
         alert('Please use a valid URL');
         return false;
     }
-
+    console.log(true);
     return true;
 };
 

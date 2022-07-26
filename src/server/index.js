@@ -7,8 +7,9 @@ const apiKey = process.env.API_KEY;
 const endpoint = process.env.API_ENDPOINT;
 console.log('Your api key is ' + apiKey);
 
-const path = require('path')
-const express = require('express')
+const path = require('path');
+const express = require('express');
+const fetch = require('node-fetch');
 
 //mockAPI for testing
 //const mockAPIResponse = require('./mockAPI.js')
@@ -39,24 +40,47 @@ app.listen(8080, function () {
     console.log('Example app listening on port 8080!')
 })
 
-/*mock api for testing
+/*
+mock api for testing
 app.get('/test', function (req, res) {
     res.send(mockAPIResponse)
 })
 */
 
-const apiCall = async(req, res) => {
-    if (Object.keys(req.body).length === 0) res.status(404).send('Please use a valid URL');
-    console.log(req.body.url);
-    const response = await fetch (endpoint + 'key=$' + apiKey + 'url=$' + req.body.url + '&lang=en');
+/*
+async function apiCall(input) {
+    //if (Object.keys(req.body).length === 0) res.status(404).send('Please use a valid URL');
+    const site = endpoint + '?key=' + apiKey + '&of=json&lang=en&url=' + input;
+    const data = await fetch(site);
     try {
-        const data = await response.json();
-        console.log(data);
-        res.send(data);
+        const api_data = await data.json();
+        return api_data;
     }
     catch (e) {
         console.log('Error', e);
     }
 }
+*/
 
-app.post('/call', apiCall);
+app.post('/call', async (req, res) => {
+    const site = endpoint + '?key=' + apiKey + '&of=json&lang=en&url=' + req.body.url;
+    const data = await fetch(site);
+    try {
+        const api_data = await data.json();
+        //console.log(api_data);
+        const analysisData = {
+            Agreement: api_data.agreement,
+            Subjectivity: api_data.subjectivity,
+            Confidence: api_data.confidence,
+            Irony: api_data.irony
+        }
+        //console.log(analysisData);
+        res.send(analysisData);
+    }
+    catch (e) {
+        console.log('Error', e);
+    }
+});
+
+//async function callBack (req, res) {
+    //res.send(await apiCall(req.body.url));
