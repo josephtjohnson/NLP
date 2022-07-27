@@ -22,5 +22,5 @@ describe('Post Endpoints', () => {
       .send({ url: "paris" })
       .expect((response) => {
    assert.ok(response.text.includes(200));
-  });
+  })
 })});
